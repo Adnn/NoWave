@@ -1,3 +1,6 @@
+#CMake
+build/
+
 #OS X
 *.DS_store
 
