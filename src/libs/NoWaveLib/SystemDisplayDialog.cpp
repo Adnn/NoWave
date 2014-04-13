@@ -55,10 +55,12 @@ void SystemDisplayDialog::update(float time)
 		if(keyboard->getKeyState(Polycode::KEY_a))
         {
             nextSentence = textlist.list.at(0).second;
+            mEngine.removeEntity(dialog.getEntity());
         }
- 		else if(keyboard->getKeyState(Polycode::KEY_z))
+ 		else if(keyboard->getKeyState(Polycode::KEY_z) && textlist.list.size()>1)
         {
             nextSentence = textlist.list.at(1).second;
+            mEngine.removeEntity(dialog.getEntity());
         }
         
         if (nextSentence != "")
@@ -69,7 +71,6 @@ void SystemDisplayDialog::update(float time)
             auto entityHandle = mEngine.getEntity(strs.at(0));
             entityHandle->get<ComponentSentence>()->identifier = nextSentence;
  
-            mEngine.removeEntity(dialog.getEntity());
         }
     }
 }

@@ -31,8 +31,8 @@ protected:
     std::string stateKey(aunteater::Node &aInitiatorNode);
     
 private:
-    aunteater::Nodes mPlayers;
-    aunteater::Nodes mPNJs;
+    aunteater::Nodes mInitiators;
+    aunteater::Nodes mTalkers;
     
     aunteater::Engine &mEngine;
     

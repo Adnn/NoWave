@@ -44,8 +44,8 @@ SystemConversation::SystemConversation(Engine &aEngine,
                                        Polycode::Screen *aScreen,
                                        const std::string &aInitialDoc,
                                        const std::string &aConversationDoc) :
-        mPlayers(aEngine.getNodes<NodeInitiators>()),
-        mPNJs (aEngine.getNodes<NodeTalkers>()),
+        mInitiators(aEngine.getNodes<NodeInitiators>()),
+        mTalkers (aEngine.getNodes<NodeTalkers>()),
         mEngine(aEngine),
         mScreen(aScreen)
 {
@@ -69,39 +69,42 @@ std::string SystemConversation::stateKey(aunteater::Node &aInitiatorNode)
 
 void SystemConversation::update(float time)
 {
-    for (auto & initiator : mPlayers)
+    std::cout << "Initers: " << mInitiators.size() << std::endl;
+    for (auto & initiator : mInitiators)
     {
-        auto & addressee = static_cast<ComponentAddressee &>(initiator.get(&typeid(ComponentAddressee)));
+        auto & addressee = initiator.get<ComponentAddressee>();
         if (addressee.entityName != "")
         {
-            //std::string next_sentence_id = mInitialTree.get<std::string>(addressee.entityName + "." + stateKey(initiator));
-			std::string next_sentence_id = "";
+            std::cout << '+' ;
+            //std::string nextSentenceId = mInitialTree.get<std::string>(addressee.entityName + "." + stateKey(initiator));
+			std::string nextSentenceId = "";
 			
 			BOOST_FOREACH(boost::property_tree::ptree::value_type & value,
-				mInitialTree.get_child(addressee.entityName + "." + stateKey(initiator)))
+                          mInitialTree.get_child(addressee.entityName + "." + stateKey(initiator)))
 			{
-				next_sentence_id = value.second.get<std::string>("");
-				if (next_sentence_id != "")
+				nextSentenceId = value.second.get<std::string>("");
+				if (nextSentenceId != "")
 				{
 					break;
 				}
 			}
 
-			std::vector<std::string> strs;
-			boost::split(strs, next_sentence_id, boost::is_any_of("_"));
+			std::vector<std::string> splittedStrings;
+			boost::split(splittedStrings, nextSentenceId, boost::is_any_of("_"));
             
-            Handle<Entity> nextTalking = mEngine.getEntity(strs.at(0));
+            Handle<Entity> nextTalking = mEngine.getEntity(splittedStrings.at(0));
             if ((*nextTalking).has(&typeid(ComponentSentence)))
             {
                 auto & nextSentence = *nextTalking->get<ComponentSentence>();
-                nextSentence.identifier = next_sentence_id;
+                nextSentence.identifier = nextSentenceId;
             }
             
+            // Once the addresse has be handled, remove it from the initiator.
             addressee.entityName = "";
         }
     }
     
-    for (auto & talker : mPNJs)
+    for (auto & talker : mTalkers)
     {
         auto & sentence = talker.get<ComponentSentence>();
         auto & position = talker.get<ComponentPosition>();
@@ -113,12 +116,12 @@ void SystemConversation::update(float time)
             BOOST_FOREACH(boost::property_tree::ptree::value_type & value,
                           mConversationTree.get_child(sentence.identifier))
             {
-                int i = 0;
+                int id = 0;
                 std::pair<std::string, std::string> pair;
                 BOOST_FOREACH(boost::property_tree::ptree::value_type & subvalue,
                               value.second)
                 {
-                    if(!i)
+                    if(!id)
                     {
                         pair.first = subvalue.second.get<std::string>("");
                     }
@@ -126,7 +129,7 @@ void SystemConversation::update(float time)
                     {
                         pair.second = subvalue.second.get<std::string>("");
                     }
-                    ++i;
+                    ++id;
                 }
                 
                 textPairList.push_back(pair);
