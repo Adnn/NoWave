@@ -40,8 +40,16 @@ void SystemDisplayDialog::addedToEngine(aunteater::Engine &aEngine)
     
 void SystemDisplayDialog::update(float time)
 {
-    for(auto & dialog : mDialogs)
+
+    // This loop is possibly removing the element it is iterating over (in mEngine.removeEntity)
+    // For this reason it needs to increment to the next element before the eventual removal.
+    for (std::list<Node>::iterator dialogIt = mDialogs.begin();
+         dialogIt != mDialogs.end();
+         /*++dialogIt*/)
     {
+        Node & dialog = *dialogIt;
+        ++dialogIt;
+
         auto & position = dialog.get<ComponentPosition>();
         auto & textlist = dialog.get<ComponentTextList>();
         
