@@ -19,12 +19,12 @@ using namespace aunteater;
 class NodeDialog
 {
 public:
-    static const ComponentIds gComponentTypes;
+    static const ArchetypeTypeSet gComponentTypes;
 };
 
-const ComponentIds NodeDialog::gComponentTypes = { &typeid(ComponentPosition),
-                                                   &typeid(ComponentTextList),
-                                                   &typeid(ComponentKeyboard),
+const ArchetypeTypeSet NodeDialog::gComponentTypes = { &typeid(ComponentPosition),
+                                                       &typeid(ComponentTextList),
+                                                       &typeid(ComponentKeyboard),
 };
 
 SystemDisplayDialog::SystemDisplayDialog(Engine &aEngine) :

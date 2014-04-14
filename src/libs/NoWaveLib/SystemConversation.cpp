@@ -24,21 +24,21 @@ using namespace aunteater;
 class NodeInitiators
 {
 public:
-    static const ComponentIds gComponentTypes;
+    static const ArchetypeTypeSet gComponentTypes;
 };
 
-const ComponentIds NodeInitiators::gComponentTypes = { &typeid(ComponentDrugState),
-                                                       &typeid(ComponentAddressee),
-                                                       &typeid(ComponentAlignment) };
+const ArchetypeTypeSet NodeInitiators::gComponentTypes = { &typeid(ComponentDrugState),
+                                                           &typeid(ComponentAddressee),
+                                                           &typeid(ComponentAlignment) };
 
 class NodeTalkers
 {
 public:
-    static const ComponentIds gComponentTypes;
+    static const ArchetypeTypeSet gComponentTypes;
 };
 
-const ComponentIds NodeTalkers::gComponentTypes = { &typeid(ComponentSentence),
-                                                    &typeid(ComponentPosition) };
+const ArchetypeTypeSet NodeTalkers::gComponentTypes = { &typeid(ComponentSentence),
+                                                        &typeid(ComponentPosition) };
 
 SystemConversation::SystemConversation(Engine &aEngine,
                                        Polycode::Screen *aScreen,
