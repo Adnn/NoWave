@@ -28,6 +28,7 @@ public:
 	void update(float time);
 
 public:
+    bool mSpaceIsDown;
 	std::list<aunteater::Node> & mActorList;
 	std::list<aunteater::Node> & mInteractionList;
 };

@@ -28,6 +28,8 @@ const ArchetypeTypeSet NodeDialog::gComponentTypes = { &typeid(ComponentPosition
 };
 
 SystemDisplayDialog::SystemDisplayDialog(Engine &aEngine) :
+        mADown(false),
+        mZDown(false),
         mDialogs(aEngine.getNodes<NodeDialog>()),
         mEngine(aEngine)
 {
@@ -62,13 +64,25 @@ void SystemDisplayDialog::update(float time)
         std::string nextSentence("");
 		if(keyboard->getKeyState(Polycode::KEY_a))
         {
-            nextSentence = textlist.list.at(0).second;
-            mEngine.removeEntity(dialog.getEntity());
+            if (!mADown)
+            {
+                mADown = true;
+                nextSentence = textlist.list.at(0).second;
+                mEngine.removeEntity(dialog.getEntity());
+            }
         }
  		else if(keyboard->getKeyState(Polycode::KEY_z) && textlist.list.size()>1)
         {
-            nextSentence = textlist.list.at(1).second;
-            mEngine.removeEntity(dialog.getEntity());
+            if (!mZDown)
+            {
+                mZDown = true;
+                nextSentence = textlist.list.at(1).second;
+                mEngine.removeEntity(dialog.getEntity());
+            }
+        }
+        else if (mADown || mZDown)
+        {
+            mADown = mZDown = false;
         }
         
         if (nextSentence != "")
