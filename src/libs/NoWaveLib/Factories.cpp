@@ -62,6 +62,7 @@ Entity createPlayer(Polycode::Screen * aScreen)
 	player.addComponent(animationComp);
 	player.addComponent(std::make_shared<ComponentScale>());
 	player.addComponent(std::make_shared<ComponentPlayer>());
+	player.addComponent(std::make_shared<ComponentSentence>());
 	
     return player;
 }
