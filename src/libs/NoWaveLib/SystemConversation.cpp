@@ -67,6 +67,23 @@ std::string SystemConversation::stateKey(aunteater::Node &aInitiatorNode)
     return drugState.name + "_0_0_" + alignment.sign;
 }
 
+std::function<void()> conversationCallback(std::string aNextSentenceId, Engine &aEngineRef)
+{
+    return
+        [aNextSentenceId, &aEngineRef]()
+        {
+            if(aNextSentenceId=="")
+            {
+                return;
+            }
+            std::vector<std::string> strs;
+            boost::split(strs, aNextSentenceId, boost::is_any_of("_"));
+
+            auto entityHandle = aEngineRef.getEntity(strs.at(0));
+            entityHandle->get<ComponentSentence>()->identifier = aNextSentenceId;
+        };
+}
+
 void SystemConversation::update(float time)
 {
     std::cout << "Initers: " << mInitiators.size() << std::endl;
@@ -110,7 +127,7 @@ void SystemConversation::update(float time)
         auto & position = talker.get<ComponentPosition>();
         if(sentence.identifier != "")
         {
-            TextPairList textPairList;
+            TextAndCallbackList TextAndCallbackList;
             
             std::list< std::pair<std::string, std::string> > mParams;
             BOOST_FOREACH(boost::property_tree::ptree::value_type & value,
@@ -131,11 +148,12 @@ void SystemConversation::update(float time)
                     }
                     ++id;
                 }
-                
-                textPairList.push_back(pair);
+
+                TextAndCallbackList.emplace_back(pair.first,
+                                          conversationCallback(pair.second, mEngine));
             }
             
-            mEngine.addEntity(createTextBox(mScreen, textPairList, position.x, position.y));
+            mEngine.addEntity(createTextBox(mScreen, TextAndCallbackList, position.x, position.y));
             
             sentence.identifier = "";
         }

@@ -61,13 +61,12 @@ void SystemDisplayDialog::update(float time)
         
         Polycode::CoreInput * keyboard = Polycode::CoreServices::getInstance()->getCore()->getInput();
         
-        std::string nextSentence("");
 		if(keyboard->getKeyState(Polycode::KEY_a))
         {
             if (!mADown)
             {
                 mADown = true;
-                nextSentence = textlist.list.at(0).second;
+                textlist.list.at(0).second();
                 mEngine.removeEntity(dialog.getEntity());
             }
         }
@@ -76,23 +75,13 @@ void SystemDisplayDialog::update(float time)
             if (!mZDown)
             {
                 mZDown = true;
-                nextSentence = textlist.list.at(1).second;
+                textlist.list.at(1).second();
                 mEngine.removeEntity(dialog.getEntity());
             }
         }
         else if (mADown || mZDown)
         {
             mADown = mZDown = false;
-        }
-        
-        if (nextSentence != "")
-        {
-            std::vector<std::string> strs;
-            boost::split(strs, nextSentence, boost::is_any_of("_"));
-            
-            auto entityHandle = mEngine.getEntity(strs.at(0));
-            entityHandle->get<ComponentSentence>()->identifier = nextSentence;
- 
         }
     }
 }

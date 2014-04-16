@@ -67,7 +67,7 @@ Entity createPlayer(Polycode::Screen * aScreen)
     return player;
 }
 
-Entity createTextBox(Polycode::Screen *aScreen, TextPairList aTpl, float x, float y)
+Entity createTextBox(Polycode::Screen *aScreen, TextAndCallbackList aTpl, float x, float y)
 {
     Entity textBox;
     textBox.addComponent(std::make_shared<ComponentTextList>(aScreen, aTpl));

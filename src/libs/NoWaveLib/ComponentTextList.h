@@ -12,10 +12,11 @@
 #include <Polycode.h>
 #include <aunteater/Component.h>
 
+#include <functional>
 #include <string>
 #include <list>
 
-typedef std::vector< std::pair<std::string, std::string> > TextPairList;
+typedef std::vector< std::pair<std::string, std::function<void()> > > TextAndCallbackList;
 
 class ComponentTextList : public aunteater::Component
 {
@@ -25,7 +26,7 @@ public:
 		return typeid(*this);
 	}
     
-    ComponentTextList(Polycode::Screen *aScreen, TextPairList aTpl) :
+    ComponentTextList(Polycode::Screen *aScreen, TextAndCallbackList aTpl) :
         list(aTpl),
 		screen(aScreen)
     {
@@ -36,7 +37,7 @@ public:
         Polycode::CoreServices::getInstance()->getFontManager()->registerFont("Script", "/Library/Fonts/Impact.ttf");
  
         int i = 0;
-        for( const TextPairList::value_type & pair : aTpl)
+        for( const TextAndCallbackList::value_type & pair : aTpl)
         {
             Polycode::ScreenLabel * label = new Polycode::ScreenLabel(pair.first, 18,"Script");
             label->setPositionMode(Polycode::ScreenEntity::POSITION_TOPLEFT);
@@ -49,7 +50,7 @@ public:
         aScreen->addChild(rectangle);
     }
     
-     TextPairList list;
+     TextAndCallbackList list;
      Polycode::ScreenShape *rectangle;
      std::list<Polycode::ScreenLabel *> labels;
      Polycode::Scene * scene;
