@@ -57,16 +57,38 @@ void SystemDisplayDialog::update(float time)
         textlist.rectangle->setPosition(position.x, position.y);
 		textlist.screen->rootEntity.moveChildTop(textlist.rectangle);
         
-        
+
+        if(textlist.highlightRect)
+        {
+            if(action.down == input_state::BUTTON_FALLING_EDGE)
+            {
+                textlist.highlightedIndex = textlist.highlightedIndex < (textlist.list.size()-1) ?
+                    textlist.highlightedIndex + 1 : 0;
+            }
+            else if(action.up == input_state::BUTTON_FALLING_EDGE)
+            {
+                textlist.highlightedIndex = textlist.highlightedIndex /* != 0 */ ?
+                    textlist.highlightedIndex - 1 : (textlist.list.size()-1);
+            }
+
+            textlist.highlightRect
+                ->setPosition(0, textlist.highlightedIndex*ComponentTextList::gHeight);
+        }
+
 		if(action.buttonA == input_state::BUTTON_FALLING_EDGE)
         {
-                textlist.list.at(0).second();
-                mEngine.removeEntity(dialog.getEntity());
+            textlist.list.at(0).second();
+            mEngine.removeEntity(dialog.getEntity());
         }
  		else if(action.buttonZ == input_state::BUTTON_FALLING_EDGE && textlist.list.size()>1)
         {
-                textlist.list.at(1).second();
-                mEngine.removeEntity(dialog.getEntity());
+            textlist.list.at(1).second();
+            mEngine.removeEntity(dialog.getEntity());
+        }
+        else if(action.buttonAction == input_state::BUTTON_FALLING_EDGE)
+        {
+            textlist.list.at(textlist.highlightedIndex).second();
+            mEngine.removeEntity(dialog.getEntity());
         }
     }
 }
