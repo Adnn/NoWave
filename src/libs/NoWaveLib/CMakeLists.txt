@@ -9,7 +9,7 @@ project(NoWaveLib)
 # TODO : list .h files here. 
 # Helpful windows command : dir /b /oen
 set(${PROJECT_NAME}_HEADERS
-    app.h
+    ComponentActionController.h
     ComponentAddressee.h
     ComponentAlignment.h
     ComponentAnimationState.h
@@ -53,15 +53,17 @@ set(${PROJECT_NAME}_HEADERS
     SystemDisplay.h
     SystemDisplayDialog.h
     SystemInteraction.h
+    SystemKeyboardControl.h
     SystemMove.h
     SystemMoveAnimation.h
     SystemScaling.h
     SystemZReorder.h
+    app.h
 )
 
 # TODO : list .cpp files here
 set(${PROJECT_NAME}_SOURCES
-    app.cpp
+    ComponentActionController.cpp
     ComponentAnimationState.cpp
     ComponentBarrier.cpp
     ComponentInteraction.cpp
@@ -97,10 +99,12 @@ set(${PROJECT_NAME}_SOURCES
     SystemDisplay.cpp
     SystemDisplayDialog.cpp
     SystemInteraction.cpp
+    SystemKeyboardControl.cpp
     SystemMove.cpp
     SystemMoveAnimation.cpp
     SystemScaling.cpp
     SystemZReorder.cpp
+    app.cpp
 )
 
 

@@ -20,10 +20,16 @@
 
 #include <vector>
 
+class ComponentActionController;
+
 aunteater::Entity createPlayer(Polycode::Screen *aScreen);
 std::vector<aunteater::Entity> createPnj(Polycode::Screen *aScreen);
 aunteater::Entity createVideur(Polycode::Screen *aScreen);
-aunteater::Entity createTextBox(Polycode::Screen *aScreen, TextAndCallbackList aTpl, float x, float y);
+
+/// Makes a copy of the ComponentActionController
+aunteater::Entity createTextBox(Polycode::Screen *aScreen, TextAndCallbackList aTpl,
+                                float x, float y,
+                                std::shared_ptr<ComponentActionController> aController);
 
 std::vector<aunteater::Entity> createPng(Polycode::Screen *aScreen);
 std::vector<aunteater::Entity> createBackground(Polycode::Screen *aScreen);

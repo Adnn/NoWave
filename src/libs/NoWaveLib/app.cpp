@@ -11,6 +11,7 @@
 #include "SystemConversation.h"
 #include "SystemInteraction.h"
 #include "SystemDisplayDialog.h"
+#include "SystemKeyboardControl.h"
 
 using namespace aunteater;
 
@@ -45,8 +46,9 @@ void HardCore::init()
 
 	Entity inter = createInteractionVideur(mEngine);
 	mEngine.addEntity(inter);
-	
+
 	new SystemDisplay(mEngine,*mScreen);
+    new SystemKeyboardControl(mEngine);
 	new SystemMove(mEngine);
 	new InputSystem(mEngine);
 	new SystemAnimation(mEngine);

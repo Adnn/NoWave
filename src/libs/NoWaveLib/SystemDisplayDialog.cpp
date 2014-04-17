@@ -11,7 +11,7 @@
 #include "ComponentSentence.h"
 #include "ComponentPosition.h"
 #include "ComponentTextList.h"
-#include "ComponentKeyboard.h"
+#include "ComponentActionController.h"
 #include <boost/algorithm/string.hpp>
 
 using namespace aunteater;
@@ -24,12 +24,10 @@ public:
 
 const ArchetypeTypeSet NodeDialog::gComponentTypes = { &typeid(ComponentPosition),
                                                        &typeid(ComponentTextList),
-                                                       &typeid(ComponentKeyboard),
+                                                       &typeid(ComponentActionController),
 };
 
 SystemDisplayDialog::SystemDisplayDialog(Engine &aEngine) :
-        mADown(false),
-        mZDown(false),
         mDialogs(aEngine.getNodes<NodeDialog>()),
         mEngine(aEngine)
 {
@@ -54,34 +52,21 @@ void SystemDisplayDialog::update(float time)
 
         auto & position = dialog.get<ComponentPosition>();
         auto & textlist = dialog.get<ComponentTextList>();
+        const auto action = dialog.get<ComponentActionController>();
         
         textlist.rectangle->setPosition(position.x, position.y);
 		textlist.screen->rootEntity.moveChildTop(textlist.rectangle);
         
         
-        Polycode::CoreInput * keyboard = Polycode::CoreServices::getInstance()->getCore()->getInput();
-        
-		if(keyboard->getKeyState(Polycode::KEY_a))
+		if(action.buttonA == input_state::BUTTON_FALLING_EDGE)
         {
-            if (!mADown)
-            {
-                mADown = true;
                 textlist.list.at(0).second();
                 mEngine.removeEntity(dialog.getEntity());
-            }
         }
- 		else if(keyboard->getKeyState(Polycode::KEY_z) && textlist.list.size()>1)
+ 		else if(action.buttonZ == input_state::BUTTON_FALLING_EDGE && textlist.list.size()>1)
         {
-            if (!mZDown)
-            {
-                mZDown = true;
                 textlist.list.at(1).second();
                 mEngine.removeEntity(dialog.getEntity());
-            }
-        }
-        else if (mADown || mZDown)
-        {
-            mADown = mZDown = false;
         }
     }
 }

@@ -23,6 +23,7 @@
 #include "ComponentAddressee.h"
 #include "ComponentDrugState.h"
 #include "ComponentAlignment.h"
+#include "ComponentActionController.h"
 #include "ComponentSentence.h"
 
 #include <string>
@@ -57,6 +58,7 @@ Entity createPlayer(Polycode::Screen * aScreen)
 	player.addComponent(std::make_shared<ComponentAddressee>());
 	player.addComponent(sprite);
 	player.addComponent(std::make_shared<ComponentKeyboard>());
+	player.addComponent(std::make_shared<ComponentActionController>());
 	player.addComponent(std::make_shared<ComponentSpeed>());
 	player.addComponent(std::make_shared<ComponentZReorderable>());
 	player.addComponent(animationComp);
@@ -67,13 +69,17 @@ Entity createPlayer(Polycode::Screen * aScreen)
     return player;
 }
 
-Entity createTextBox(Polycode::Screen *aScreen, TextAndCallbackList aTpl, float x, float y)
+Entity createTextBox(Polycode::Screen *aScreen, TextAndCallbackList aTpl,
+                     float x, float y,
+                     std::shared_ptr<ComponentActionController> aController)
 {
     Entity textBox;
     textBox.addComponent(std::make_shared<ComponentTextList>(aScreen, aTpl));
     textBox.addComponent(std::make_shared<ComponentPosition>(x, y));
 	textBox.addComponent(std::make_shared<ComponentKeyboard>());
 	textBox.addComponent(std::make_shared<ComponentZord>(-1000));
+    
+	textBox.addComponent(std::make_shared<ComponentActionController>(*aController));
     
     return textBox;
 }

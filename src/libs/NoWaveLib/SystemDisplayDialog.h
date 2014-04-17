@@ -23,8 +23,6 @@ public:
     virtual void update(float time);
     
 private:
-    bool mADown;
-    bool mZDown;
     aunteater::Nodes mDialogs;
     aunteater::Engine & mEngine;
 };

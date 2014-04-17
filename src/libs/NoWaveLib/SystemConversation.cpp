@@ -8,6 +8,7 @@
 
 #include "SystemConversation.h"
 
+#include "ComponentActionController.h"
 #include "ComponentAddressee.h"
 #include "ComponentAlignment.h"
 #include "ComponentDrugState.h"
@@ -150,10 +151,13 @@ void SystemConversation::update(float time)
                 }
 
                 TextAndCallbackList.emplace_back(pair.first,
-                                          conversationCallback(pair.second, mEngine));
+                                                 conversationCallback(pair.second, mEngine));
             }
+
+            /// \todo We cannot go multiplayer because it is always picking the 'player' controller
+            mEngine.addEntity(createTextBox(mScreen, TextAndCallbackList, position.x, position.y,
+                                            mEngine.getEntity("player")->get<ComponentActionController>()));
             
-            mEngine.addEntity(createTextBox(mScreen, TextAndCallbackList, position.x, position.y));
             
             sentence.identifier = "";
         }
