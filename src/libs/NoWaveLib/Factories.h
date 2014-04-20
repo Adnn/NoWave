@@ -29,6 +29,7 @@ aunteater::Entity createVideur(Polycode::Screen *aScreen);
 /// Makes a copy of the ComponentActionController
 aunteater::Entity createTextBox(Polycode::Screen *aScreen, TextAndCallbackList aTpl,
                                 float x, float y,
+                                BoxStyle aBoxStyle,
                                 std::shared_ptr<ComponentActionController> aController);
 
 std::vector<aunteater::Entity> createPng(Polycode::Screen *aScreen);

@@ -12,7 +12,6 @@
 #define BOOST_NO_CXX11_RVALUE_REFERENCES
 #include <aunteater/Engine.h>
 
-#include "Factories.h"
 
 #include "ComponentSprite.h"
 

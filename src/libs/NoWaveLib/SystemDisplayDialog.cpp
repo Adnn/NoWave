@@ -72,7 +72,8 @@ void SystemDisplayDialog::update(float time)
             }
 
             textlist.highlightRect
-                ->setPosition(0, textlist.highlightedIndex*ComponentTextList::gHeight);
+                ->setPosition(ComponentTextList::gPadding,
+                              textlist.highlightedIndex*ComponentTextList::gHeight);
         }
 
 		if(action.buttonA == input_state::BUTTON_FALLING_EDGE)

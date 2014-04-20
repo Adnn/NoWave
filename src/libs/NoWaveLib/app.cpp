@@ -1,5 +1,7 @@
 #include "app.h"
 
+#include "Factories.h"
+
 #include "SystemZReorder.h"
 #include "SystemDisplay.h"
 #include "SystemMove.h"

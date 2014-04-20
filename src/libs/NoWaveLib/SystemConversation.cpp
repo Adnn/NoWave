@@ -128,7 +128,7 @@ void SystemConversation::update(float time)
         auto & position = talker.get<ComponentPosition>();
         if(sentence.identifier != "")
         {
-            TextAndCallbackList TextAndCallbackList;
+            TextAndCallbackList textAndCallbacks;
             
             std::list< std::pair<std::string, std::string> > mParams;
             BOOST_FOREACH(boost::property_tree::ptree::value_type & value,
@@ -150,12 +150,13 @@ void SystemConversation::update(float time)
                     ++id;
                 }
 
-                TextAndCallbackList.emplace_back(pair.first,
+                textAndCallbacks.emplace_back(pair.first,
                                                  conversationCallback(pair.second, mEngine));
             }
 
             /// \todo We cannot go multiplayer because it is always picking the 'player' controller
-            mEngine.addEntity(createTextBox(mScreen, TextAndCallbackList, position.x, position.y,
+            mEngine.addEntity(createTextBox(mScreen, textAndCallbacks, position.x, position.y,
+                                            textAndCallbacks.size() > 1 ? BoxStyle::THOUGHTS : BoxStyle::RECTANGLE,
                                             mEngine.getEntity("player")->get<ComponentActionController>()));
             
             

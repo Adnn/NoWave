@@ -71,10 +71,11 @@ Entity createPlayer(Polycode::Screen * aScreen)
 
 Entity createTextBox(Polycode::Screen *aScreen, TextAndCallbackList aTpl,
                      float x, float y,
+                     BoxStyle aBoxStyle,
                      std::shared_ptr<ComponentActionController> aController)
 {
     Entity textBox;
-    textBox.addComponent(std::make_shared<ComponentTextList>(aScreen, aTpl));
+    textBox.addComponent(std::make_shared<ComponentTextList>(aScreen, aTpl, aBoxStyle));
     textBox.addComponent(std::make_shared<ComponentPosition>(x, y));
 	textBox.addComponent(std::make_shared<ComponentKeyboard>());
 	textBox.addComponent(std::make_shared<ComponentZord>(-1000));
