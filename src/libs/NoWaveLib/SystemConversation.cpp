@@ -8,13 +8,16 @@
 
 #include "SystemConversation.h"
 
+#include "Factories.h"
+
 #include "ComponentActionController.h"
 #include "ComponentAddressee.h"
 #include "ComponentAlignment.h"
 #include "ComponentDrugState.h"
 #include "ComponentPosition.h"
 #include "ComponentSentence.h"
-#include "Factories.h"
+
+#include "NodeTalker.h"
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/algorithm/string.hpp>
@@ -32,21 +35,13 @@ const ArchetypeTypeSet NodeInitiators::gComponentTypes = { &typeid(ComponentDrug
                                                            &typeid(ComponentAddressee),
                                                            &typeid(ComponentAlignment) };
 
-class NodeTalkers
-{
-public:
-    static const ArchetypeTypeSet gComponentTypes;
-};
-
-const ArchetypeTypeSet NodeTalkers::gComponentTypes = { &typeid(ComponentSentence),
-                                                        &typeid(ComponentPosition) };
 
 SystemConversation::SystemConversation(Engine &aEngine,
                                        Polycode::Screen *aScreen,
                                        const std::string &aInitialDoc,
                                        const std::string &aConversationDoc) :
         mInitiators(aEngine.getNodes<NodeInitiators>()),
-        mTalkers (aEngine.getNodes<NodeTalkers>()),
+        mTalkers (aEngine.getNodes<NodeTalker>()),
         mEngine(aEngine),
         mScreen(aScreen)
 {

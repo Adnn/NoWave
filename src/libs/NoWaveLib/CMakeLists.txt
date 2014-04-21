@@ -43,6 +43,7 @@ set(${PROJECT_NAME}_HEADERS
     NodeMoveAnimation.h
     NodePlayerCollision.h
     NodeScaling.h
+    NodeTalker.h
     NodeZBoundary.h
     NodeZOrder.h
     SystemAnimation.h
@@ -52,6 +53,7 @@ set(${PROJECT_NAME}_HEADERS
     SystemDepth.h
     SystemDisplay.h
     SystemDisplayDialog.h
+    SystemGameStatePolling.h
     SystemInteraction.h
     SystemKeyboardControl.h
     SystemMove.h
@@ -90,6 +92,7 @@ set(${PROJECT_NAME}_SOURCES
     NodePlayerCollision.cpp
     NodeScalable.cpp
     NodeScaling.cpp
+    NodeTalker.cpp
     NodeZBoundary.cpp
     NodeZOrder.cpp
     SystemAnimation.cpp
@@ -98,6 +101,7 @@ set(${PROJECT_NAME}_SOURCES
     SystemDepth.cpp
     SystemDisplay.cpp
     SystemDisplayDialog.cpp
+    SystemGameStatePolling.cpp
     SystemInteraction.cpp
     SystemKeyboardControl.cpp
     SystemMove.cpp

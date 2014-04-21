@@ -14,6 +14,7 @@
 #include "SystemInteraction.h"
 #include "SystemDisplayDialog.h"
 #include "SystemKeyboardControl.h"
+#include "SystemGameStatePolling.h"
 
 using namespace aunteater;
 
@@ -64,4 +65,5 @@ void HardCore::init()
                            BASE_PATH "scenarios/conversation.txt");
 	new SystemInteraction(mEngine);
 	new SystemDisplayDialog(mEngine);
+    new SystemGameStatePolling(mEngine);
 }
