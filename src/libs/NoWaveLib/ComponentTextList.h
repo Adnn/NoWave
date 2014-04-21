@@ -52,7 +52,7 @@ public:
             maxWidth = std::max(maxWidth, label->getWidth());
             label->setPositionMode(Polycode::ScreenEntity::POSITION_TOPLEFT);
             label->setPosition(gPadding, i*gHeight);
-            label->setColor(Polycode::Color(200, 0, 0, 255));
+            label->setColor(Polycode::Color(0, 0, 0, 255));
             ++i;
         }
 
@@ -87,7 +87,7 @@ public:
         {
             highlightRect = new Polycode::ScreenShape(Polycode::ScreenShape::SHAPE_RECT,
                                                       maxWidth, gHeight);
-            highlightRect->setColor(Polycode::Color(0, 200, 0, 255));
+            highlightRect->setColor(Polycode::Color(236, 155, 155, 255));
             highlightRect->setPositionMode(Polycode::ScreenEntity::POSITION_TOPLEFT);
 
             rectangle->addChild(highlightRect);
