@@ -32,9 +32,18 @@ void HardCore::init()
 	}
 
 	std::vector<Entity> pngs = createPnj(mScreen);
+    // Quick hack so a 'meuf' is actually addressable
+    bool first = true;
 	for (Entity png : pngs)
 	{
-		mEngine.addEntity(png);
+        if (first)
+        {
+            first = false;
+            mEngine.addEntity("meuf", png);
+        }
+        {
+            mEngine.addEntity(png);
+        }
 	}
 
 
