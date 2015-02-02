@@ -82,13 +82,13 @@ std::function<void()> conversationCallback(std::string aNextSentenceId, Engine &
 
 void SystemConversation::update(float time)
 {
-    std::cout << "Initers: " << mInitiators.size() << std::endl;
+    //std::cout << "Initers: " << mInitiators.size() << std::endl;
     for (auto & initiator : mInitiators)
     {
         auto & addressee = initiator.get<ComponentAddressee>();
         if (addressee.entityName != "")
         {
-            std::cout << '+' ;
+            std::cout << addressee.entityName << " is addressed." << std::endl ;
             //std::string nextSentenceId = mInitialTree.get<std::string>(addressee.entityName + "." + stateKey(initiator));
 			std::string nextSentenceId = "";
 			
@@ -154,6 +154,8 @@ void SystemConversation::update(float time)
                                             textAndCallbacks.size() > 1 ? BoxStyle::THOUGHTS : BoxStyle::RECTANGLE,
                                             mEngine.getEntity("player")->get<ComponentActionController>()));
             
+            std::cout << "Added a text box with " << textAndCallbacks.size()
+            << " choices corresponding to " << sentence.identifier << std::endl;
             
             sentence.identifier = "";
         }
